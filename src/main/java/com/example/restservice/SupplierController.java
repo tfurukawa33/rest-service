@@ -15,12 +15,11 @@ public class SupplierController {
   @Autowired
   private SupplierRepository supplierRepository;
 
-//   @Autowired
-//   private SupplierGroupRepository supplierGroupRepository;
+  @Autowired
+  private SupplierGroupRepository supplierGroupRepository;
 
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Supplier> getAllSuppliers() {
-    // This returns a JSON or XML with the users
     return supplierRepository.findAll();
   }
 
@@ -29,11 +28,14 @@ public class SupplierController {
       return supplierRepository.findById(id);
   }
 
-  @PostMapping(path="/add") // Map ONLY POST Requests
+  @GetMapping(path="/supplier_groups")
+  public @ResponseBody Iterable<SupplierGroup> getAllSupplierGroups() {
+      return supplierGroupRepository.findAll();
+  }
+
+  @PostMapping(path="/add")
   public @ResponseBody String addNewUser (@RequestParam String name
       , @RequestParam int group) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
 
     Supplier n = new Supplier();
     n.setName(name);

@@ -5,15 +5,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
-// import javax.persistence.ForeignKey;
+
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name="suppliers")
 @Data
+@ToString(exclude = "group")
 public class Supplier {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -23,11 +28,11 @@ public class Supplier {
     @Column(name = "supplier_name", nullable = true, updatable = true)
     private String name;
 
-    // @Column(name = "group_id", nullable = true, updatable = true)
-    // private Integer groupId;
+    @Column(name = "group_id", nullable = true, updatable = true)
+    private String groupId;
 
     @ManyToOne // 多対1
-    @JoinColumn(name = "group_id")
-    // @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name="group_id"))
-    SupplierGroup supplierGroups;
+    @JoinColumn(name = "group_id", referencedColumnName = "group_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties("suppliers")
+    private SupplierGroup group;
 }
