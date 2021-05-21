@@ -1,4 +1,4 @@
-package com.example.restservice;
+package com.example.restservice.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

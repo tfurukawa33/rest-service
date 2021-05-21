@@ -1,10 +1,11 @@
-package com.example.restservice;
+package com.example.restservice.repository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -26,6 +27,7 @@ public class Supplier {
     private Integer id;
 
     @Column(name = "supplier_name", nullable = true, updatable = true)
+    @NotNull
     private String name;
 
     @Column(name = "group_id", nullable = true, updatable = true)

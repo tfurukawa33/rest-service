@@ -1,6 +1,10 @@
-package com.example.restservice;
+package com.example.restservice.controller;
 
 import java.util.Optional;
+
+import com.example.restservice.repository.Supplier;
+import com.example.restservice.service.SupplierService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,36 +14,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/api")
 public class SupplierController {
   @Autowired
-  private SupplierRepository supplierRepository;
+  private SupplierService supplierService;
 
-  @Autowired
-  private SupplierGroupRepository supplierGroupRepository;
-
-  @GetMapping(path="/all")
+  @GetMapping(path="/suppliers")
   public @ResponseBody Iterable<Supplier> getAllSuppliers() {
-    return supplierRepository.findAll();
+    return supplierService.findAll();
   }
 
   @GetMapping(path="/supplier")
   public @ResponseBody Optional<Supplier> getSupplier(@RequestParam(value = "id") int id) {
-      return supplierRepository.findById(id);
+      return supplierService.findById(id);
   }
 
-  @GetMapping(path="/supplier_groups")
-  public @ResponseBody Iterable<SupplierGroup> getAllSupplierGroups() {
-      return supplierGroupRepository.findAll();
+  @PostMapping(path="/delete")
+  public @ResponseBody String deleteUser (@RequestParam(value = "id") int id) {
+      supplierService.delete(id);
+      return id + " is deleted";
   }
 
   @PostMapping(path="/add")
-  public @ResponseBody String addNewUser (@RequestParam String name
-      , @RequestParam int group) {
-
+  public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam int group) {
     Supplier n = new Supplier();
     n.setName(name);
-    supplierRepository.save(n);
+    supplierService.save(n);
     return "Saved";
   }
 }

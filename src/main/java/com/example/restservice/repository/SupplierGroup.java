@@ -1,4 +1,4 @@
-package com.example.restservice;
+package com.example.restservice.repository;
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -25,6 +26,7 @@ public class SupplierGroup {
     private Integer id;
 
     @Column(name = "group_name", nullable = true, updatable = true)
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "group") // 1対多
